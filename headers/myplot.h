@@ -21,6 +21,19 @@ namespace myplot {
         double x, y;
     };
 
+    class point3d {
+    public:
+        point3d(double, double, double);
+        point3d(point3d const&);
+        ~point3d();
+        double getx() const;
+        double gety() const;
+        double getz() const;
+        friend std::ostream& operator<<(std::ostream&, point3d const&);
+    private:
+        double x, y, z;
+    };
+
     class plot_data {
     public:
         plot_data();
@@ -44,9 +57,30 @@ namespace myplot {
         std::string style;
     };
     
+    class surf_data {
+    public:
+        surf_data();
+        surf_data(std::string const&);
+        surf_data(surf_data const&);
+        ~surf_data();
+        void add_point(double, double, double);
+        int size() const;
+        bool empty() const;
+        void set_style(std::string const&);
+        char const* get_style() const;
+        surf_data operator=(surf_data const&);
+        friend std::ostream& operator<<(std::ostream&, surf_data const&);
+    private:
+        std::vector<point3d> points;
+        std::string style;
+        int iso_sample_size;
+    };
+    
     typedef std::vector<plot_data> data_set;
+    typedef std::vector<surf_data> surf_data_set;
 
     void plot(data_set data);
+    void surf(surf_data_set data, const char* title);
 
 }
 
