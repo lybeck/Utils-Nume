@@ -130,7 +130,7 @@ namespace myplot {
             
             std::string ret;
             unpack_surfsty(data[i].get_style(), &ret);
-            plotfile << " \"" << filename << "\" " << ret;
+            plotfile << " \"" << filename << "\" " << ret << " notitle";
             if(i != data.size() - 1){
                  plotfile << ",";
             } else {
