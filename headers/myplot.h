@@ -80,6 +80,8 @@ namespace myplot {
     typedef std::vector<surf_data> surf_data_set;
 
     void plot(data_set data);
+    void generate_data(double(*)(double, double), surf_data_set&, surf_data&, double, double, double, double);
+    void surf(surf_data_set data, const char* title, int sample_size, int iso_sample_size);
     void surf(surf_data_set data, const char* title);
 
 }
