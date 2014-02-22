@@ -38,7 +38,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/eps.o \
 	${OBJECTDIR}/src/myeigen.o \
 	${OBJECTDIR}/src/myhouse2.o \
-	${OBJECTDIR}/src/myplot.o
+	${OBJECTDIR}/src/myplot.o \
+	${OBJECTDIR}/src/mypoly.o \
+	${OBJECTDIR}/src/testSurf.o
 
 
 # C Compiler Flags
@@ -86,6 +88,16 @@ ${OBJECTDIR}/src/myplot.o: src/myplot.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/myplot.o src/myplot.cpp
+
+${OBJECTDIR}/src/mypoly.o: src/mypoly.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/mypoly.o src/mypoly.cpp
+
+${OBJECTDIR}/src/testSurf.o: src/testSurf.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/testSurf.o src/testSurf.cpp
 
 # Subprojects
 .build-subprojects:
