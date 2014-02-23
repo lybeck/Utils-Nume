@@ -40,7 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/myhouse2.o \
 	${OBJECTDIR}/src/myplot.o \
 	${OBJECTDIR}/src/mypoly.o \
-	${OBJECTDIR}/src/testSurf.o
+	${OBJECTDIR}/src/mysurf.o
 
 
 # C Compiler Flags
@@ -94,10 +94,10 @@ ${OBJECTDIR}/src/mypoly.o: src/mypoly.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/mypoly.o src/mypoly.cpp
 
-${OBJECTDIR}/src/testSurf.o: src/testSurf.cpp 
+${OBJECTDIR}/src/mysurf.o: src/mysurf.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/testSurf.o src/testSurf.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/mysurf.o src/mysurf.cpp
 
 # Subprojects
 .build-subprojects:
