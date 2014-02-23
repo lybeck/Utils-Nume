@@ -165,149 +165,33 @@ namespace myplot {
         i = 0;
         while (style[i] != '\0') {
             switch (style[i]) {
-                case 'y':
-                {
-                    lt = '7';
-                    break;
-                }
-                case 'm':
-                {
-                    lt = '4';
-                    break;
-                }
-                case 'c':
-                {
-                    lt = '5';
-                    break;
-                }
-                case 'r':
-                {
-                    lt = '1';
-                    break;
-                }
-                case 'g':
-                {
-                    lt = '2';
-                    break;
-                }
-                case 'b':
-                {
-                    lt = '3';
-                    break;
-                }
-                case 'w':
-                {
-                    lt = '0';
-                    break;
-                }
-                case 'k':
-                {
-                    lt = '0';
-                    break;
-                }
-                case '0':
-                {
-                    siz = '0';
-                    break;
-                }
-                case '1':
-                {
-                    siz = '1';
-                    break;
-                }
-                case '2':
-                {
-                    siz = '2';
-                    break;
-                }
-                case '3':
-                {
-                    siz = '3';
-                    break;
-                }
-                case '4':
-                {
-                    siz = '4';
-                    break;
-                }
-                case '5':
-                {
-                    siz = '5';
-                    break;
-                }
-                case '6':
-                {
-                    siz = '6';
-                    break;
-                }
-                case '7':
-                {
-                    siz = '7';
-                    break;
-                }
-                case '8':
-                {
-                    siz = '8';
-                    break;
-                }
-                case '9':
-                {
-                    siz = '9';
-                    break;
-                }
-                case '.':
-                {
-                    st = 'p';
-                    break;
-                }
-                case 'o':
-                {
-                    st = 'p';
-                    pt = '1';
-                    break;
-                }
-                case 'x':
-                {
-                    st = 'p';
-                    pt = '4';
-                    break;
-                }
-                case '+':
-                {
-                    st = 'p';
-                    pt = '8';
-                    break;
-                }
-                case '*':
-                {
-                    st = 'p';
-                    pt = '6';
-                    break;
-                }
-                case 's':
-                {
-                    st = 'p';
-                    pt = '3';
-                    break;
-                }
-                case 'd':
-                {
-                    st = 'p';
-                    pt = '1';
-                    break;
-                }
-                case '^':
-                {
-                    st = 'p';
-                    pt = '5';
-                    break;
-                }
-                case '-':
-                {
-                    st = 'l';
-                    break;
-                }
-                default: break;
+                case 'm': {lt='4'; break;}
+                case 'c': {lt='5'; break;}
+                case 'r': {lt='1'; break;}
+                case 'g': {lt='2'; break;}
+                case 'b': {lt='3'; break;}
+                case 'w': {lt='0'; break;}
+                case 'k': {lt='0'; break;}
+                case '0': {siz='0'; break;}
+                case '1': {siz='1'; break;}
+                case '2': {siz='2'; break;}
+                case '3': {siz='3'; break;}
+                case '4': {siz='4'; break;}
+                case '5': {siz='5'; break;}
+                case '6': {siz='6'; break;}
+                case '7': {siz='7'; break;}
+                case '8': {siz='8'; break;}
+                case '9': {siz='9'; break;}
+                case '.': {st='p'; break;}
+                case 'o': {st='p'; pt='1'; break;}
+                case 'x': {st='p'; pt='4'; break;}
+                case '+': {st='p'; pt='8'; break;}
+                case '*': {st='p'; pt='6'; break;}
+                case 's': {st='p'; pt='3'; break;}
+                case 'd': {st='p'; pt='1'; break;}
+                case '^': {st='p'; pt='5'; break;}
+                case '-': {st='l'; break;}
+                default : break;
             }
             ++i;
         }
