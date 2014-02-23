@@ -165,6 +165,7 @@ namespace myplot {
         i = 0;
         while (style[i] != '\0') {
             switch (style[i]) {
+                case 'y': {lt='7'; break;}
                 case 'm': {lt='4'; break;}
                 case 'c': {lt='5'; break;}
                 case 'r': {lt='1'; break;}
