@@ -16,31 +16,30 @@ namespace myplot {
 
     static const std::string default_style = "b-";
 
-    point2d::point2d(double x, double y) : x(x), y(y) {
-    }
+    point2d::point2d(double x, double y) : x(x), y(y) { }
 
-    point2d::point2d(const point2d& other) : x(other.x), y(other.y) {
-    }
+    point2d::point2d(const point2d& other) : x(other.x), y(other.y) { }
 
-    point2d::~point2d() {
-    }
+    point2d::~point2d() { }
 
     std::ostream& operator<<(std::ostream& stream, point2d const& p) {
         stream << p.x << " " << p.y;
         return stream;
     }
 
-    plot_data::plot_data() : points(), style(default_style), min_x(INFINITY), max_x(-INFINITY), min_y(INFINITY), max_y(-INFINITY) {
-    }
+    plot_data::plot_data() : points(), style(default_style), min_x(INFINITY), max_x(-INFINITY), min_y(INFINITY),
+    max_y(-INFINITY) { }
 
-    plot_data::plot_data(const std::string& style) : points(), style(style), min_x(INFINITY), max_x(-INFINITY), min_y(INFINITY), max_y(-INFINITY) {
-    }
+    plot_data::plot_data(const std::string& style) : points(), style(style), min_x(INFINITY), max_x(-INFINITY),
+    min_y(INFINITY), max_y(-INFINITY) { }
 
-    plot_data::plot_data(const plot_data& other) : points(other.points), style(other.style), min_x(other.min_x), max_x(other.max_x), min_y(other.min_y), max_y(other.max_y) {
-    }
+    plot_data::plot_data(std::string const& style, std::string const& title) : points(), style(style), title(title),
+    min_x(INFINITY), max_x(-INFINITY), min_y(INFINITY), max_y(-INFINITY) { }
 
-    plot_data::~plot_data() {
-    }
+    plot_data::plot_data(const plot_data& other) : points(other.points), style(other.style), title(other.title),
+    min_x(other.min_x), max_x(other.max_x), min_y(other.min_y), max_y(other.max_y) { }
+
+    plot_data::~plot_data() { }
 
     void plot_data::add_point(double x, double y) {
         if (x < min_x)
@@ -53,11 +52,11 @@ namespace myplot {
             max_y = y;
         points.push_back(point2d(x, y));
     }
-    
+
     int plot_data::size() const {
         return points.size();
     }
-    
+
     bool plot_data::empty() const {
         return points.empty();
     }
@@ -65,9 +64,13 @@ namespace myplot {
     void plot_data::set_style(const std::string& s) {
         style = s;
     }
-    
-    char const* plot_data::get_style() const {
-        return style.c_str();
+
+    std::string const& plot_data::get_style() const {
+        return style;
+    }
+
+    std::string const& plot_data::get_title() const {
+        return title;
     }
 
     double plot_data::get_min_x() const {
@@ -98,21 +101,21 @@ namespace myplot {
         }
         return stream;
     }
-    
+
     static void unpacksty(const char *style, char *ret);
 
     void plot(data_set data) {
-        
-        if(data.empty()) {
+
+        if (data.empty()) {
             std::cerr << "Nothing to plot..." << std::endl;
             return;
         }
-        
+
         double min_x = INFINITY;
         double max_x = -INFINITY;
         double min_y = INFINITY;
         double max_y = -INFINITY;
-        
+
         std::ofstream plotfile("plot.cmd"), mnmxfile("mnmx.dat");
         plotfile << "set timestamp" << std::endl;
         plotfile << "set grid" << std::endl;
@@ -134,19 +137,25 @@ namespace myplot {
             datafile << data[i];
             datafile.close();
             char ret[20];
-            unpacksty(data[i].get_style(), ret);
-            plotfile << ", '" << filename << "' notitle w " << ret;
+            unpacksty(data[i].get_style().c_str(), ret);
+            std::string const& title = data[i].get_title();
+            plotfile << ", '" << filename << "' ";
+            if (title.empty())
+                plotfile << "notitle ";
+            else
+                plotfile << "title '" << title << "' ";
+            plotfile << "w " << ret;
         }
-        
+
         plotfile << std::endl;
         plotfile << "pause -1" << std::endl;
-        
+
         mnmxfile << max_x + std::abs(0.08 * (max_x - min_x)) << " " << max_y + std::abs(0.08 * (max_y - min_y)) << std::endl;
         mnmxfile << min_x - std::abs(0.08 * (max_x - min_x)) << " " << min_y - std::abs(0.08 * (max_y - min_y)) << std::endl;
 
         plotfile.close();
         mnmxfile.close();
-        
+
         system("gnuplot plot.cmd");
     }
 
@@ -156,34 +165,149 @@ namespace myplot {
         i = 0;
         while (style[i] != '\0') {
             switch (style[i]) {
-                case 'y': {lt='7'; break;}
-                case 'm': {lt='4'; break;}
-                case 'c': {lt='5'; break;}
-                case 'r': {lt='1'; break;}
-                case 'g': {lt='2'; break;}
-                case 'b': {lt='3'; break;}
-                case 'w': {lt='0'; break;}
-                case 'k': {lt='0'; break;}
-                case '0': {siz='0'; break;}
-                case '1': {siz='1'; break;}
-                case '2': {siz='2'; break;}
-                case '3': {siz='3'; break;}
-                case '4': {siz='4'; break;}
-                case '5': {siz='5'; break;}
-                case '6': {siz='6'; break;}
-                case '7': {siz='7'; break;}
-                case '8': {siz='8'; break;}
-                case '9': {siz='9'; break;}
-                case '.': {st='p'; break;}
-                case 'o': {st='p'; pt='1'; break;}
-                case 'x': {st='p'; pt='4'; break;}
-                case '+': {st='p'; pt='8'; break;}
-                case '*': {st='p'; pt='6'; break;}
-                case 's': {st='p'; pt='3'; break;}
-                case 'd': {st='p'; pt='1'; break;}
-                case '^': {st='p'; pt='5'; break;}
-                case '-': {st='l'; break;}
-                default : break;
+                case 'y':
+                {
+                    lt = '7';
+                    break;
+                }
+                case 'm':
+                {
+                    lt = '4';
+                    break;
+                }
+                case 'c':
+                {
+                    lt = '5';
+                    break;
+                }
+                case 'r':
+                {
+                    lt = '1';
+                    break;
+                }
+                case 'g':
+                {
+                    lt = '2';
+                    break;
+                }
+                case 'b':
+                {
+                    lt = '3';
+                    break;
+                }
+                case 'w':
+                {
+                    lt = '0';
+                    break;
+                }
+                case 'k':
+                {
+                    lt = '0';
+                    break;
+                }
+                case '0':
+                {
+                    siz = '0';
+                    break;
+                }
+                case '1':
+                {
+                    siz = '1';
+                    break;
+                }
+                case '2':
+                {
+                    siz = '2';
+                    break;
+                }
+                case '3':
+                {
+                    siz = '3';
+                    break;
+                }
+                case '4':
+                {
+                    siz = '4';
+                    break;
+                }
+                case '5':
+                {
+                    siz = '5';
+                    break;
+                }
+                case '6':
+                {
+                    siz = '6';
+                    break;
+                }
+                case '7':
+                {
+                    siz = '7';
+                    break;
+                }
+                case '8':
+                {
+                    siz = '8';
+                    break;
+                }
+                case '9':
+                {
+                    siz = '9';
+                    break;
+                }
+                case '.':
+                {
+                    st = 'p';
+                    break;
+                }
+                case 'o':
+                {
+                    st = 'p';
+                    pt = '1';
+                    break;
+                }
+                case 'x':
+                {
+                    st = 'p';
+                    pt = '4';
+                    break;
+                }
+                case '+':
+                {
+                    st = 'p';
+                    pt = '8';
+                    break;
+                }
+                case '*':
+                {
+                    st = 'p';
+                    pt = '6';
+                    break;
+                }
+                case 's':
+                {
+                    st = 'p';
+                    pt = '3';
+                    break;
+                }
+                case 'd':
+                {
+                    st = 'p';
+                    pt = '1';
+                    break;
+                }
+                case '^':
+                {
+                    st = 'p';
+                    pt = '5';
+                    break;
+                }
+                case '-':
+                {
+                    st = 'l';
+                    break;
+                }
+                default: break;
             }
             ++i;
         }
