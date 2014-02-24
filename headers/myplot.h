@@ -38,13 +38,15 @@ namespace myplot {
     public:
         plot_data();
         plot_data(std::string const&);
+        plot_data(std::string const&, std::string const&);
         plot_data(plot_data const&);
         ~plot_data();
         void add_point(double, double);
         int size() const;
         bool empty() const;
         void set_style(std::string const&);
-        char const* get_style() const;
+        std::string const& get_style() const;
+        std::string const& get_title() const;
         double get_min_x() const;
         double get_max_x() const;
         double get_min_y() const;
@@ -55,6 +57,7 @@ namespace myplot {
         std::vector<point2d> points;
         double min_x, max_x, min_y, max_y;
         std::string style;
+        std::string title;
     };
     
     class surf_data {
